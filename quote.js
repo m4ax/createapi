@@ -53,6 +53,41 @@ export async function getRandomQuote() {
 
 }
 
-export async function editQuote(id, quoteText) {}
+/*export async function editQuote(id, quoteText) {
+    const quotesList = await fs.readFile(fileName);
+  const data = JSON.parse(quotesList);
+  for(i = 0; i < data.length; i++){
+  if(id === data[i][id]){
+    let oldQuote = data[i][quoteText]
+     oldQuote.replace(newQuote, oldQuote)
+  }
+  else{
+     null
+  }}
+  
+  const quotesJSON = JSON.stringify(data);
+  await fs.writeFile(fileName, quotesJSON, 'utf-8');
+  console.log('Complete');
+  
+  return 
+}
+*/
 
+export async function editQuote(id, quoteText) {
+    const quotesList = await fs.readFile(fileName);
+    const data = JSON.parse(quotesList);
+    for (let i = 0; i < data.length; i++) {
+      if (id === data[i].id) {
+        const oldQuote = data[i].quoteText;
+        data[i].quoteText = quoteText;
+        const quotesJSON = JSON.stringify(data);
+        await fs.writeFile(fileName, quotesJSON, 'utf-8');
+        console.log('Complete');
+        return data[i];
+      }
+    }
+    return null;
+  }
+  
 export async function deleteQuote(id) {}
+
