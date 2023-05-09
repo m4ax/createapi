@@ -25,9 +25,33 @@ export async function addQuote(quoteText) {
   return newQuote;
 }
 
-export async function getQuotes() {}
+addQuote()
 
-export async function getRandomQuote() {}
+
+export async function getQuotes() {
+
+  const quotesList = await fs.readFile(fileName);
+  const data = JSON.parse(quotesList);
+
+  return data
+}
+
+
+/* 
+ not take in any arguments
+- read/parse all quote objects from `quotes.json`
+- return a single randomly selected quote object
+*/
+
+export async function getRandomQuote() {
+  const quotesList = await fs.readFile(fileName);
+  const data = JSON.parse(quotesList);
+
+  const randomNumber = Math.floor(Math.random() * data.length);
+
+  return data[randomNumber]
+
+}
 
 export async function editQuote(id, quoteText) {}
 
