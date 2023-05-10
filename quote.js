@@ -10,7 +10,7 @@ export async function addQuote(quoteText) {
 
   const newQuote = {
     id: uuidv4(),
-    quoteText: 'Five four three two one',
+    quoteText: quoteText,
   };
 
   // const quotes = await getQuotes();
@@ -89,5 +89,24 @@ export async function editQuote(id, quoteText) {
     return null;
   }
   
-export async function deleteQuote(id) {}
+  
+  export async function deleteQuote(id) {
+
+    const quoteList = await fs.readFile("quotes.json", 'utf-8')
+    const quotes = JSON.parse(quoteList)
+
+    const indexToDelete = quotes.findIndex(item => {
+      return item.id === id
+    })
+
+    if (indexToDelete == null) {
+      return null
+    }
+
+    const [deletedQuote] = quotes.splice(indexToDelete, 1)
+
+    await fs.writeFile(fileName, JSON.stringify(quotes), 'utf-8')
+    return deletedQuote
+  }
+  
 
